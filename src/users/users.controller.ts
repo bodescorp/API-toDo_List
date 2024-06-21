@@ -17,7 +17,7 @@ export class UsersController {
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
   @ApiResponse({
-    status: HttpStatus.OK,
+    status: HttpStatus.CREATED,
     description: 'The user has been successfully created.',
   })
   @ApiConflictResponse({ description: 'User already exists.' })
