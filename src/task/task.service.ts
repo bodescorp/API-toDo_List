@@ -35,7 +35,7 @@ export class TaskService {
     let foundTask: TaskEntity;
     try {
       foundTask = await this.taskRepository.findOne({
-        where: { id },
+      where: [{ id, user_id: this.tenantService.getTenant().id }],
       });
 
       if (!foundTask) {

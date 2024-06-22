@@ -34,7 +34,8 @@ export class TaskDto {
   @IsString()
   @MinLength(3)
   @MaxLength(256)
-  title: string;
+  @IsOptional()
+  title?: string;
 
   /**
    * A descrição detalhada da tarefa.
@@ -44,7 +45,8 @@ export class TaskDto {
   @IsString()
   @MinLength(5)
   @MaxLength(512)
-  description: string;
+  @IsOptional()
+  description?: string;
 
   /**
    * O status atual da tarefa, representado por um valor da enumeração TaskStatusEnum.
