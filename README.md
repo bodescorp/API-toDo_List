@@ -61,16 +61,16 @@ Esta aplicação é uma API REST desenvolvida com NestJS para gerenciar o cadast
 
 3. Crie um arquivo `.env` na raiz do projeto e adicione as seguintes variáveis de ambiente:
 
-```env
-  JWT_SECRET=
-  JWT_EXPIRATION_TIME=
+   ```env
+   JWT_SECRET=
+   JWT_EXPIRATION_TIME=
 
-  DB_HOST=
-  DB_PORT=
-  DB_USERNAME=
-  DB_PASSWORD=
-  DB_NAME=
-```
+   DB_HOST=
+   DB_PORT=
+   DB_USERNAME=
+   DB_PASSWORD=
+   DB_NAME=
+   ```
 
 4. Configure a conexão com o banco de dados no arquivo `src/app.module.ts` se necessário.
 
