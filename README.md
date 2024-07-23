@@ -1,73 +1,187 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Cadastro de Pagamentos
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Esta aplicação é uma API REST desenvolvida com NestJS para gerenciar o cadastro de Tarefas, incluindo a validação de contas, atualização de saldo, armazenamento de pagamentos no banco de dados e geração de relatórios de transações.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Índice
 
-## Description
+- [Instalação](#instalação)
+- [Configuração](#configuração)
+- [Uso](#uso)
+- [Endpoints](#endpoints)
+- [Tecnologias](#tecnologias)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Instalação
 
-## Installation
+### Usando Docker Compose
 
-```bash
-$ yarn install
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/bodescorp/API-toDo_List.git
+   cd API-toDo_List
+   ```
+
+2. Crie um arquivo `.env` na raiz do projeto e adicione as seguintes variáveis de ambiente:
+
+   ```env
+    JWT_SECRET=
+    JWT_EXPIRATION_TIME=
+
+    DB_HOST=
+    DB_PORT=
+    DB_USERNAME=
+    DB_PASSWORD=
+    DB_NAME=
+   ```
+
+3. Construa e inicie os containers Docker:
+
+   ```bash
+   docker-compose up --build
+   ```
+
+4. A API estará disponível em `http://localhost:3000`.
+
+### Manualmente
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/bodescorp/API-toDo_List.git
+   cd API-toDo_List
+   ```
+
+2. Instale as dependências:
+
+   ```bash
+   yarn install
+   ```
+
+3. Crie um arquivo `.env` na raiz do projeto e adicione as seguintes variáveis de ambiente:
+
+```env
+  JWT_SECRET=
+  JWT_EXPIRATION_TIME=
+
+  DB_HOST=
+  DB_PORT=
+  DB_USERNAME=
+  DB_PASSWORD=
+  DB_NAME=
 ```
 
-## Running the app
+4. Configure a conexão com o banco de dados no arquivo `src/app.module.ts` se necessário.
 
-```bash
-# development
-$ yarn run start
+5. Inicie o Banco de Dados:
 
-# watch mode
-$ yarn run start:dev
+   ```bash
+   yarn migration:run
+   ```
 
-# production mode
-$ yarn run start:prod
-```
+6. Inicie o servidor:
 
-## Test
+   ```bash
+   yarn start:dev
+   ```
 
-```bash
-# unit tests
-$ yarn run test
+7. A API estará disponível em `http://localhost:3000`.
 
-# e2e tests
-$ yarn run test:e2e
+## Uso
 
-# test coverage
-$ yarn run test:cov
-```
+1. Para iniciar a aplicação com Docker Compose:
 
-## Support
+   ```bash
+   docker-compose up --build
+   ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+2. Para parar os containers:
 
-## Stay in touch
+   ```bash
+   docker-compose down
+   ```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Endpoints
 
-## License
+### Usuarios
 
-Nest is [MIT licensed](LICENSE).
+- `POST /users`
+  - **Descrição:** Criação de usuário e retorna o usuario criado.
+  - **Body:** `{ "username": "seu-email", "password": "sua-senha" }`
+  - **Resposta:** `{ "id": "id", "username":"seu-email"}`
+
+### Autenticação
+
+- `POST /auth/login`
+  - **Descrição:** Autentica um usuário e retorna um token JWT.
+  - **Body:** `{ "username": "seu-email", "password": "sua-senha" }`
+  - **Resposta:** `{ "token": "seu-token", "expiresIn":3600}`
+
+### Tarefas
+
+- `POST /tasks`
+
+  - **Descrição:** Cria uma nova tarefa com título, descrição e status (pendente ou concluída).
+  - **Autenticação:** Bearer token
+  - **Body:** `{ "title": "Título da tarefa", "description": Descrição da tarefa", "status": "Status da tarefa (pendente ou concluída)." }`
+
+- `GET /tasks`
+
+  - **Descrição:** Lista todas as tarefas com possibilidade de filtrar por status.
+  - **Autenticação:** Bearer token
+  - **Parâmetros Query Opcionais**:
+    - `title`: Filtra as tarefas pelo titulo.
+    - `status`: Filtrar tarefas pelo status (pendente ou concluída).
+  - **Resposta:** `[ {"title": "title",	"description": "description", "description": "description"}, ... ]`
+
+  - `GET /tasks/id`
+  - **Descrição:** Retorna um tarefa específica.
+  - **Autenticação:** Bearer token
+  - **Resposta:** `{"id": "id",	"title": "title", "description": "description",	"status": "status"}`
+
+- `PUT /tasks/id`
+
+  - **Descrição:** Atualiza o título, descrição ou status de uma tarefa.
+  - **Autenticação:** Bearer token
+  - **Body:** `{"título": "título", "descrição": "descrição",	"status": "status"}`
+
+- `DELETE /tasks/id`
+  - **Descrição:** Exclui uma tarefa.
+  - **Autenticação:** Bearer token
+
+### Documentação
+
+- A documentação da API é gerada usando Swagger e está disponível em `/api`.
+
+## Uso
+
+Acesse `http://localhost:3000/api` para visualizar a documentação Swagger e testar os endpoints.
+
+## Extras
+
+### Multi-tenancy
+
+- Suporte para múltiplos inquilinos (multi-tenancy).
+
+## Tecnologias
+
+- [NestJS](https://nestjs.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [TypeORM](https://typeorm.io/)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Swagger](https://swagger.io/docs/)
+
+## Contribuição
+
+1. Faça um fork do repositório.
+2. Crie uma nova branch com sua feature: `git checkout -b minha-feature`.
+3. Commit suas mudanças: `git commit -m 'Adiciona minha feature'`.
+4. Faça um push para a branch: `git push origin minha-feature`.
+5. Abra um Pull Request.
+
+## Licença
+
+Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
